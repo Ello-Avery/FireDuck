@@ -1,44 +1,81 @@
-<h1
-  style="
-    font-size: 3rem;
-    font-family: Georgia, serif;
-    color: #fff;
-    background: #111;
-    padding: 1rem 2rem;
-    border-left: 6px solid #ff4500;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-  "
->
-  🔥🦆🔥🦆🔥🦆 Fire Duck 🦆🔥🦆🔥🦆🔥
+<!-- Lily pad decorations -->
+<div class="lily-pad lily-pad-1"></div>
+<div class="lily-pad lily-pad-2"></div>
+
+<!-- Title -->
+<h1 class="pond-title">
+  <span class="emoji-float">🦆</span>
+  Fire Duck Pond
+  <span class="emoji-float">🦆</span>
 </h1>
+<p class="pond-tagline">~ welcome to the pond ~</p>
 
-<h2>Add Duck</h2>
+<div class="pond-layout">
+  <!-- Add / Edit Form Card -->
+  <div class="pond-card">
+    @if (!editMode()) {
+      <h2>🪺 Add a Duck</h2>
+    } @else {
+      <h2>✏️ Modify Duck</h2>
+    }
 
-<label for="name">
-  <p>Name</p>
-  <input type="text" name="name" [(ngModel)]="name" />
-</label>
-<label for="color">
-  <p>Color</p>
-  <input type="radio" name="color" value="Blue" [(ngModel)]="color" /> Blue
-  <input type="radio" name="color" value="White" [(ngModel)]="color" /> White
-  <input type="radio" name="color" value="Red" [(ngModel)]="color" /> Red
-</label>
-<br />
-<br />
-<button (click)="addDuck()">Add Duck</button>
+    <div class="field-group">
+      <label for="name">
+        <p>Duck Name</p>
+        <input type="text" id="name" placeholder="e.g. Sir Quacksalot" [(ngModel)]="duck().name" />
+      </label>
+    </div>
 
-<br />
-<hr />
-<br />
-<!-- <button (click)="seeDucks()">See Ducks in Console</button> -->
-<h2>List of Ducks</h2>
+    <div class="field-group">
+      <p>Duck Color</p>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" [(ngModel)]="duck().color" value="Blue" /> 🔵 Blue
+        </label>
+        <label class="radio-option">
+          <input type="radio" [(ngModel)]="duck().color" value="White" /> ⚪ White
+        </label>
+        <label class="radio-option">
+          <input type="radio" [(ngModel)]="duck().color" value="Red" /> 🔴 Red
+        </label>
+      </div>
+    </div>
 
-@for (duck of allDucks(); track duck.id) {
-  <div class="duck-card">
-    <h3>{{ duck.name }}</h3>
-    <p>Color: {{ duck.color }}</p>
-    <button (click)="deleteDuck(duck.id!)">Shoo Duck</button>
+    @if (!editMode()) {
+      <button class="btn btn-add" (click)="addDuck()">🦆 Add to Pond</button>
+    } @else {
+      <button class="btn btn-edit" (click)="editDuck()">💾 Save Changes</button>
+    }
   </div>
-}
+
+  <!-- Duck List Card -->
+  <div class="pond-card">
+    <h2>🌊 The Pond</h2>
+
+    <div class="duck-list">
+      @for (duck of allDucks$(); track duck.id) {
+        <div class="duck-item">
+          <span class="duck-avatar">🦆</span>
+
+          <div class="duck-info">
+            <p class="duck-name">{{ duck.name }}</p>
+            <p class="duck-color">
+              <span class="duck-color-dot" [style.background]="duck.color.toLowerCase()"></span>
+              {{ duck.color }}
+            </p>
+          </div>
+
+          <div class="duck-actions">
+            <button class="btn-sm btn-modify" (click)="getDuckById(duck.id!)">✏️ Edit</button>
+            <button class="btn-sm btn-shoo" (click)="deleteDuck(duck.id!)">👋 Shoo</button>
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-pond">
+          <span class="empty-icon">🌿</span>
+          <p>No ducks in the pond yet — add one above!</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

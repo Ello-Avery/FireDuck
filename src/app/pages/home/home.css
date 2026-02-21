@@ -1,0 +1,471 @@
+/* ================================================
+   🦆 DUCK POND — Component Styles
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@400;600;700&display=swap');
+
+:host {
+  --water-deep: #0a3d4a;
+  --water-mid: #0e5c6e;
+  --water-light: #1a8fa8;
+  --water-shimmer: #2bbfd4;
+  --lily-green: #3a8c2e;
+  --lily-light: #5ec44e;
+  --mud: #6b4c2a;
+  --duck-yellow: #f5c842;
+  --duck-orange: #e8832a;
+  --foam: rgba(255, 255, 255, 0.15);
+  --text-light: #e0f7fa;
+  --text-muted: #90cad4;
+
+  display: block;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 20% 60%, #0a3d4a 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 30%, #0d5060 0%, transparent 55%),
+    linear-gradient(180deg, #071e26 0%, #0a3340 40%, #0d4a5e 100%);
+  font-family: 'Nunito', sans-serif;
+  padding: 0 0 4rem 0;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Water ripple layers ── */
+:host::before,
+:host::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+:host::before {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 38px,
+    rgba(255, 255, 255, 0.025) 40px
+  );
+  animation: rippleScroll 12s linear infinite;
+}
+
+:host::after {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 78px,
+    rgba(27, 180, 210, 0.04) 80px
+  );
+  animation: rippleScroll 20s linear infinite reverse;
+}
+
+@keyframes rippleScroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 80px;
+  }
+}
+
+/* ── Title ── */
+.pond-title {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 2rem 1.5rem;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  letter-spacing: 4px;
+  color: var(--duck-yellow);
+  text-shadow:
+    0 0 20px rgba(245, 200, 66, 0.5),
+    0 4px 0 #9a6e00,
+    0 6px 12px rgba(0, 0, 0, 0.6);
+  margin: 0;
+  filter: drop-shadow(0 0 40px rgba(245, 200, 66, 0.2));
+}
+
+.pond-title .emoji-float {
+  display: inline-block;
+  animation: bobFloat 2.4s ease-in-out infinite;
+}
+.pond-title .emoji-float:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.pond-title .emoji-float:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes bobFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ── Subtitle / tagline ── */
+.pond-tagline {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0 0 2.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Side-by-side layout ── */
+.pond-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Card base ── */
+.pond-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(10, 60, 75, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(43, 191, 212, 0.2);
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.pond-card:hover {
+  border-color: rgba(43, 191, 212, 0.4);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(43, 191, 212, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ── Stack vertically on narrow screens ── */
+@media (max-width: 768px) {
+  .pond-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Section headings ── */
+.pond-card h2 {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  color: var(--water-shimmer);
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px dashed rgba(43, 191, 212, 0.25);
+  text-shadow: 0 0 16px rgba(43, 191, 212, 0.4);
+}
+
+/* ── Form fields ── */
+.field-group {
+  margin-bottom: 1.5rem;
+}
+
+.field-group label {
+  display: block;
+}
+
+.field-group p {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+
+.field-group input[type='text'] {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(6, 30, 40, 0.6);
+  border: 1.5px solid rgba(43, 191, 212, 0.25);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  color: var(--text-light);
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.field-group input[type='text']:focus {
+  border-color: var(--water-shimmer);
+  box-shadow: 0 0 0 3px rgba(43, 191, 212, 0.15);
+}
+
+.field-group input[type='text']::placeholder {
+  color: rgba(144, 202, 212, 0.4);
+}
+
+/* ── Radio group ── */
+.radio-group {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  background: rgba(6, 30, 40, 0.5);
+  border: 1.5px solid rgba(43, 191, 212, 0.2);
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.radio-option:has(input:checked) {
+  background: rgba(43, 191, 212, 0.15);
+  border-color: var(--water-shimmer);
+  color: var(--text-light);
+  box-shadow: 0 0 12px rgba(43, 191, 212, 0.2);
+}
+
+.radio-option input[type='radio'] {
+  accent-color: var(--water-shimmer);
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 50px;
+  padding: 0.75rem 1.75rem;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    box-shadow 0.2s,
+    filter 0.2s;
+}
+
+.btn:active {
+  transform: scale(0.96) translateY(1px);
+}
+
+.btn-add {
+  background: linear-gradient(135deg, #f5c842, #e8832a);
+  color: #2a1800;
+  box-shadow: 0 4px 16px rgba(245, 200, 66, 0.35);
+}
+
+.btn-add:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 24px rgba(245, 200, 66, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-edit {
+  background: linear-gradient(135deg, #2bbfd4, #1a8fa8);
+  color: #011820;
+  box-shadow: 0 4px 16px rgba(43, 191, 212, 0.3);
+}
+
+.btn-edit:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 24px rgba(43, 191, 212, 0.5);
+  transform: translateY(-1px);
+}
+
+/* ── Duck list items ── */
+.duck-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.duck-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(6, 30, 40, 0.5);
+  border: 1px solid rgba(43, 191, 212, 0.15);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+
+.duck-item:hover {
+  background: rgba(10, 60, 75, 0.7);
+  border-color: rgba(43, 191, 212, 0.3);
+  transform: translateX(4px);
+}
+
+.duck-avatar {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  flex-shrink: 0;
+  animation: gentleBob 3s ease-in-out infinite;
+}
+
+/* Stagger bob per item via nth-child */
+.duck-item:nth-child(2) .duck-avatar {
+  animation-delay: 0.5s;
+}
+.duck-item:nth-child(3) .duck-avatar {
+  animation-delay: 1s;
+}
+.duck-item:nth-child(4) .duck-avatar {
+  animation-delay: 1.5s;
+}
+.duck-item:nth-child(5) .duck-avatar {
+  animation-delay: 2s;
+}
+
+@keyframes gentleBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.duck-info {
+  flex: 1;
+}
+
+.duck-name {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 1.15rem;
+  color: var(--text-light);
+  letter-spacing: 1px;
+  margin: 0 0 0.2rem;
+}
+
+.duck-color {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.duck-color-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.duck-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.btn-sm {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8rem;
+  border-radius: 50px;
+  border: none;
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    filter 0.2s;
+}
+
+.btn-sm:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.btn-modify {
+  background: rgba(43, 191, 212, 0.2);
+  color: var(--water-shimmer);
+  border: 1px solid rgba(43, 191, 212, 0.35);
+}
+
+.btn-shoo {
+  background: rgba(220, 80, 60, 0.15);
+  color: #f08070;
+  border: 1px solid rgba(220, 80, 60, 0.3);
+}
+
+/* ── Empty state ── */
+.empty-pond {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--text-muted);
+}
+
+.empty-pond .empty-icon {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+  opacity: 0.5;
+  animation: gentleBob 3s ease-in-out infinite;
+}
+
+.empty-pond p {
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  margin: 0;
+  opacity: 0.7;
+}
+
+/* ── Lily pad decoration ── */
+.lily-pad {
+  position: fixed;
+  z-index: 1;
+  border-radius: 50%;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.lily-pad-1 {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, #5ec44e, transparent 70%);
+  bottom: 10%;
+  left: -80px;
+}
+
+.lily-pad-2 {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, #5ec44e, transparent 70%);
+  top: 30%;
+  right: -40px;
+}

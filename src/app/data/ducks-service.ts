@@ -17,6 +17,7 @@ import {
   FieldValue,
   collectionData,
 } from '@angular/fire/firestore';
+import { getDoc } from 'firebase/firestore';
 
 export type Color = 'Blue' | 'White' | 'Red';
 
@@ -44,20 +45,24 @@ export class DucksService {
    *   ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝    ╚═╝  ╚═╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝╚═╝  ╚═══╝╚══════╝
    */
 
-  async addDuck(name: string, color: Color) {
+  async addDucks(name: string, color: Color) {
     const newDuck: Duck = {
       name: name,
       color: color,
       createdAt: serverTimestamp(),
     };
 
-    const duckRef = await addDoc(this.ducksCol, newDuck);
+    if (!newDuck) return;
 
-    return duckRef.id;
+    await addDoc(this.ducksCol, newDuck);
   }
 
-  async updateDuck(duckId: string, newDuck: Duck) {
+  async editDuck(duckId: string, newDuck: Duck) {
+    if (!duckId) return;
+
     const duckDoc = doc(this.firestore, 'ducks', duckId);
+
+    if (!duckDoc) return;
 
     await updateDoc(duckDoc, {
       name: newDuck.name,
@@ -67,21 +72,23 @@ export class DucksService {
   }
 
   async deleteDuck(duckId: string) {
+    if (!duckId) return;
+
     const duckDoc = doc(this.firestore, 'ducks', duckId);
+
+    if (!duckDoc) return;
 
     await deleteDoc(duckDoc);
   }
 
-  async getAllDucks() {
-    const snapshot = await getDocs(this.ducksCol);
-
-    return snapshot.docs.map((d) => ({
-      id: d.id,
-      ...(d.data() as Duck),
-    }));
+  getAllducks$() {
+    return collectionData(this.ducksCol, { idField: 'id' }) as Observable<Duck[]>;
   }
 
-  getducks$() {
-    return collectionData(this.ducksCol, { idField: 'id' }) as Observable<Duck[]>;
+  async getDuckByID(duckId: string) {
+    const duckDoc = doc(this.firestore, 'ducks', duckId);
+    const snapshot = await getDoc(duckDoc);
+
+    return { id: snapshot.id, ...(snapshot.data() as Duck) };
   }
 }
