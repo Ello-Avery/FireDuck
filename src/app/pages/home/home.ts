@@ -22,6 +22,10 @@ export class Home {
   //   this.allDucks.set(duckList);
   // }
 
+  seeDucks() {
+    console.log(this.allDucks$);
+  }
+
   name = '';
   color: Color = 'Blue';
 
@@ -29,5 +33,9 @@ export class Home {
     this.db.addDuck(this.name, this.color);
     this.name = '';
     this.color = 'Blue';
+  }
+
+  deleteDuck(duckId: string) {
+    this.db.deleteDuck(duckId);
   }
 }

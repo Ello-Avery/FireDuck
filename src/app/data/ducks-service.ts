@@ -56,7 +56,7 @@ export class DucksService {
   }
 
   async updateDuck(duckId: string, newDuck: Duck) {
-    const duckDoc = doc(this.firestore, duckId);
+    const duckDoc = doc(this.firestore, 'ducks', duckId);
 
     await updateDoc(duckDoc, {
       name: newDuck.name,
@@ -66,7 +66,7 @@ export class DucksService {
   }
 
   async deleteDuck(duckId: string) {
-    const duckDoc = doc(this.firestore, duckId);
+    const duckDoc = doc(this.firestore, 'ducks', duckId);
 
     await deleteDoc(duckDoc);
   }
@@ -81,8 +81,6 @@ export class DucksService {
   }
 
   getducks$() {
-    return collectionData(collection(this.firestore, 'ducks'), { idField: 'id' }) as Observable<
-      Duck[]
-    >;
+    return collectionData(this.ducksCol, { idField: 'id' }) as any;
   }
 }

@@ -20,22 +20,25 @@
   <input type="text" name="name" [(ngModel)]="name" />
 </label>
 <label for="color">
+  <p>Color</p>
   <input type="radio" name="color" value="Blue" [(ngModel)]="color" /> Blue
   <input type="radio" name="color" value="White" [(ngModel)]="color" /> White
   <input type="radio" name="color" value="Red" [(ngModel)]="color" /> Red
 </label>
-
+<br />
+<br />
 <button (click)="addDuck()">Add Duck</button>
 
 <br />
 <hr />
 <br />
-
+<!-- <button (click)="seeDucks()">See Ducks in Console</button> -->
 <h2>List of Ducks</h2>
 
 @for (duck of (allDucks$ | async) ?? []; track duck.id) {
   <div class="duck-card">
     <h3>{{ duck.name }}</h3>
     <p>Color: {{ duck.color }}</p>
+    <button (click)="deleteDuck(duck.id)">Shoo Duck</button>
   </div>
 }
