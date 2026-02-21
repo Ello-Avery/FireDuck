@@ -1,0 +1,41 @@
+<h1
+  style="
+    font-size: 3rem;
+    font-family: Georgia, serif;
+    color: #fff;
+    background: #111;
+    padding: 1rem 2rem;
+    border-left: 6px solid #ff4500;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+  "
+>
+  🔥🦆🔥🦆🔥🦆 Fire Duck 🦆🔥🦆🔥🦆🔥
+</h1>
+
+<h2>Add Duck</h2>
+
+<label for="name">
+  <p>Name</p>
+  <input type="text" name="name" [(ngModel)]="name" />
+</label>
+<label for="color">
+  <input type="radio" name="color" value="Blue" [(ngModel)]="color" /> Blue
+  <input type="radio" name="color" value="White" [(ngModel)]="color" /> White
+  <input type="radio" name="color" value="Red" [(ngModel)]="color" /> Red
+</label>
+
+<button (click)="addDuck()">Add Duck</button>
+
+<br />
+<hr />
+<br />
+
+<h2>List of Ducks</h2>
+
+@for (duck of (allDucks$ | async) ?? []; track duck.id) {
+  <div class="duck-card">
+    <h3>{{ duck.name }}</h3>
+    <p>Color: {{ duck.color }}</p>
+  </div>
+}
