@@ -36,6 +36,7 @@ export class Home {
   }
 
   deleteDuck(duckId: string) {
+    if (!duckId) return;
     this.db.deleteDuck(duckId);
   }
 }
