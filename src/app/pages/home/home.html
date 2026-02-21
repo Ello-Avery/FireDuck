@@ -35,7 +35,7 @@
 <!-- <button (click)="seeDucks()">See Ducks in Console</button> -->
 <h2>List of Ducks</h2>
 
-@for (duck of (allDucks$ | async) ?? []; track duck.id) {
+@for (duck of allDucks(); track duck.id) {
   <div class="duck-card">
     <h3>{{ duck.name }}</h3>
     <p>Color: {{ duck.color }}</p>
