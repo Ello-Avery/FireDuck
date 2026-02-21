@@ -22,7 +22,7 @@ export class Home {
   });
 
   addDuck() {
-    if (this.duck.name.trim() === '' || this.duck().color.trim() === '') {
+    if (this.duck().name.trim() === '' || this.duck().color.trim() === '') {
       alert('Name and Color are required!');
       return;
     }
@@ -33,7 +33,11 @@ export class Home {
   }
 
   deleteDuck(duckId: string) {
-    this.isDuckValid(duckId);
+    //this.isDuckValid(duckId);
+    if (!duckId) {
+      alert('No duck found!');
+      return;
+    }
 
     this.db.deleteDuck(duckId);
   }
@@ -66,7 +70,7 @@ export class Home {
       return;
     }
 
-    if (this.duck.name.trim() === '' || this.duck().color.trim() === '') {
+    if (this.duck().name.trim() === '' || this.duck().color.trim() === '') {
       alert('Name and Color are required!');
       return;
     }
