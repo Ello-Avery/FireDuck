@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CollectionReference } from '@angular/fire/firestore';
 import {
   Firestore,
   collection,
@@ -32,7 +33,7 @@ export interface Duck {
 })
 export class DucksService {
   private readonly firestore = inject(Firestore);
-  private readonly ducksCol = collection(this.firestore, 'ducks');
+  private readonly ducksCol = collection(this.firestore, 'ducks') as CollectionReference<Duck>;
 
   /*
    *   ██████╗██████╗ ██╗   ██╗██████╗      █████╗  ██████╗████████╗██╗ ██████╗ ███╗   ██╗███████╗
@@ -81,6 +82,6 @@ export class DucksService {
   }
 
   getducks$() {
-    return collectionData(this.ducksCol, { idField: 'id' }) as any;
+    return collectionData(this.ducksCol, { idField: 'id' }) as Observable<Duck[]>;
   }
 }
